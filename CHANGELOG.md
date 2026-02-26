@@ -17,3 +17,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - IDE integration for scaffolding with automatic file system refresh
 - AI client interface for pluggable AI providers with Anthropic Claude implementation
 - Interview engine that conducts a guided Q&A to generate a product description
+- Chat UI with message bubbles, text input, Send and Generate Now buttons
