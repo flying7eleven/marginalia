@@ -17,7 +17,7 @@ object InterviewLauncher {
 
         if (!settings.state.autoStartInterview) return
 
-        val cliBinary = ClaudeCliDiscovery.discover()
+        val cliBinary = ClaudeCliDiscovery.discover(settings.state.claudeCliPath.ifBlank { null })
         if (cliBinary == null) {
             NotificationGroupManager.getInstance()
                 .getNotificationGroup("Marginalia")

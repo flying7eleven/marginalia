@@ -1,9 +1,14 @@
 package com.marginalia.settings
 
+import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory
 import com.intellij.openapi.options.Configurable
+import com.intellij.ui.dsl.builder.COLUMNS_LARGE
 import com.intellij.ui.dsl.builder.bindIntValue
 import com.intellij.ui.dsl.builder.bindSelected
+import com.intellij.ui.dsl.builder.bindText
+import com.intellij.ui.dsl.builder.columns
 import com.intellij.ui.dsl.builder.panel
+import com.marginalia.ai.ClaudeCliDiscovery
 import javax.swing.JComponent
 
 class MarginaliaSettingsConfigurable : Configurable {
@@ -16,8 +21,23 @@ class MarginaliaSettingsConfigurable : Configurable {
 
     override fun createComponent(): JComponent {
         val state = settings.state
+        val detectedPath = ClaudeCliDiscovery.discover(state.claudeCliPath.ifBlank { null })
 
         val p = panel {
+            group("Claude Code CLI") {
+                row("CLI path:") {
+                    textFieldWithBrowseButton(
+                        FileChooserDescriptorFactory.createSingleFileDescriptor()
+                            .withTitle("Select Claude CLI Binary"),
+                    )
+                        .columns(COLUMNS_LARGE)
+                        .bindText(state::claudeCliPath)
+                        .comment(
+                            if (detectedPath != null) "Detected: $detectedPath"
+                            else "Leave empty for auto-detection. Install Claude Code from https://claude.ai/download"
+                        )
+                }
+            }
             group("Interview") {
                 row("Max questions:") {
                     spinner(3..15)
@@ -39,6 +59,7 @@ class MarginaliaSettingsConfigurable : Configurable {
 
     override fun apply() {
         panel?.apply()
+        ClaudeCliDiscovery.invalidateCache()
     }
 
     override fun reset() {

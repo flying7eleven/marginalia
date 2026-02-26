@@ -11,6 +11,7 @@ import com.intellij.openapi.components.Storage
 class MarginaliaSettings : PersistentStateComponent<MarginaliaSettings.State> {
 
     data class State(
+        var claudeCliPath: String = "",
         var maxQuestions: Int = 8,
         var autoStartInterview: Boolean = true,
     )
