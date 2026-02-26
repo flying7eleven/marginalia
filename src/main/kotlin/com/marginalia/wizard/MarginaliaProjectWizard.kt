@@ -2,6 +2,7 @@ package com.marginalia.wizard
 
 import com.intellij.ide.util.projectWizard.WizardContext
 import com.intellij.ide.wizard.GeneratorNewProjectWizard
+import com.intellij.ide.wizard.NewProjectWizardBaseStep
 import com.intellij.ide.wizard.NewProjectWizardChainStep
 import com.intellij.ide.wizard.NewProjectWizardStep
 import com.intellij.ide.wizard.RootNewProjectWizardStep
@@ -17,5 +18,6 @@ class MarginaliaProjectWizard : GeneratorNewProjectWizard {
 
     override fun createStep(wizardContext: WizardContext): NewProjectWizardStep =
         NewProjectWizardChainStep(RootNewProjectWizardStep(wizardContext))
+            .nextStep(::NewProjectWizardBaseStep)
             .nextStep(::MarginaliaProjectWizardStep)
 }
