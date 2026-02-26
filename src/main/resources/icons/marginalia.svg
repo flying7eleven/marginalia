@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <!-- Notebook page -->
+  <rect x="3" y="1" width="11" height="14" rx="1" fill="#6C7A89" opacity="0.15" stroke="#6C7A89" stroke-width="1"/>
+  <!-- Margin line -->
+  <line x1="6" y1="1" x2="6" y2="15" stroke="#5B9BD5" stroke-width="0.75" opacity="0.6"/>
+  <!-- "M" letterform -->
+  <path d="M7.5 11V5L9.5 8.5L11.5 5V11" fill="none" stroke="#5B9BD5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
