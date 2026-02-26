@@ -11,12 +11,14 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 class InterviewEngine(
     private val aiClient: AiClient,
     private val projectConfig: ProjectConfig,
+    context: CoroutineContext = Dispatchers.Default,
 ) {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private val scope = CoroutineScope(SupervisorJob() + context)
     private val _events = MutableSharedFlow<InterviewEvent>(replay = 0, extraBufferCapacity = 64)
     val events: SharedFlow<InterviewEvent> = _events.asSharedFlow()
 
