@@ -11,7 +11,7 @@ class ScaffoldService {
         ProjectScaffolder()::scaffold
 
     internal var vfsRefresh: (Path) -> Unit = { path ->
-        LocalFileSystem.getInstance().refreshAndFindFileByNioFile(path)?.refresh(false, true)
+        LocalFileSystem.getInstance().refreshNioFiles(listOf(path), true, true, null)
     }
 
     fun scaffold(config: ProjectConfig): ScaffoldResult {
