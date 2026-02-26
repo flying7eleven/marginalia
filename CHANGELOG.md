@@ -11,3 +11,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Plugin descriptor enabling IDE recognition and loading across all JetBrains IDEs
 - Plugin icon visible in the New Project dialog and IDE menus
 - Project configuration and scaffolding result data models
+- Spec file templates for README, product description, epics index, and stories index
