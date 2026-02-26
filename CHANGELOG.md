@@ -19,3 +19,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Interview engine that conducts a guided Q&A to generate a product description
 - Chat UI with message bubbles, text input, Send and Generate Now buttons
 - Interview dialog that runs the AI conversation and writes the product description on completion
+- Automatic AI interview launch after project scaffolding (requires API key in settings)
+- Persistent settings with secure API key storage via IDE PasswordSafe
