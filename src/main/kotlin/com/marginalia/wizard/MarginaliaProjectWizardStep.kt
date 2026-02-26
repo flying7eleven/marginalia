@@ -2,8 +2,12 @@ package com.marginalia.wizard
 
 import com.intellij.ide.wizard.AbstractNewProjectWizardStep
 import com.intellij.ide.wizard.NewProjectWizardStep
+import com.intellij.notification.NotificationGroupManager
+import com.intellij.notification.NotificationType
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory
 import com.intellij.openapi.observable.properties.GraphProperty
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.validation.CHECK_DIRECTORY
 import com.intellij.openapi.ui.validation.CHECK_NON_EMPTY
 import com.intellij.ui.dsl.builder.COLUMNS_LARGE
@@ -14,7 +18,9 @@ import com.intellij.ui.dsl.builder.columns
 import com.intellij.ui.dsl.builder.rows
 import com.intellij.ui.dsl.builder.textValidation
 import com.intellij.ui.dsl.builder.trimmedTextValidation
+import com.marginalia.interview.InterviewLauncher
 import com.marginalia.scaffold.ProjectConfig
+import com.marginalia.scaffold.ScaffoldService
 import java.nio.file.Path
 
 class MarginaliaProjectWizardStep(parentStep: NewProjectWizardStep) : AbstractNewProjectWizardStep(parentStep) {
@@ -65,6 +71,27 @@ class MarginaliaProjectWizardStep(parentStep: NewProjectWizardStep) : AbstractNe
                     .comment("Brief description of the project (optional)")
             }
         }
+    }
+
+    override fun setupProject(project: Project) {
+        val config = buildProjectConfig()
+
+        val scaffoldService = ApplicationManager.getApplication().getService(ScaffoldService::class.java)
+        val result = try {
+            scaffoldService.scaffold(config)
+        } catch (e: Exception) {
+            NotificationGroupManager.getInstance()
+                .getNotificationGroup("Marginalia")
+                .createNotification(
+                    "Marginalia",
+                    "Project scaffolding failed: ${e.message}",
+                    NotificationType.ERROR,
+                )
+                .notify(project)
+            return
+        }
+
+        InterviewLauncher.launch(project, config, result.specsDir)
     }
 
     fun buildProjectConfig(): ProjectConfig = ProjectConfig(
