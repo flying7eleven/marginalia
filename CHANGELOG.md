@@ -24,3 +24,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Settings page under Preferences > Tools > Marginalia for API key, model, and interview options
 - New Project wizard step with fields for project name, location, language, and description
 - "Marginalia" entry in the New Project dialog that scaffolds a project and launches the AI interview
+- Claude Code CLI integration for AI-powered interviews using the local `claude` installation
