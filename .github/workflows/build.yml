@@ -25,5 +25,11 @@ jobs:
       - name: Build
         run: ./gradlew build
 
-      - name: Build
-        run: ./gradlew test
+      - name: Build plugin artifact
+        run: ./gradlew buildPlugin
+
+      - name: Upload plugin artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: marginalia-plugin
+          path: build/distributions/*.zip
