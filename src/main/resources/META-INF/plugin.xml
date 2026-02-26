@@ -23,5 +23,8 @@
                 parentId="tools"
                 displayName="Marginalia"
                 instance="com.marginalia.settings.MarginaliaSettingsConfigurable"/>
+
+        <notificationGroup id="Marginalia"
+                           displayType="BALLOON"/>
     </extensions>
 </idea-plugin>
