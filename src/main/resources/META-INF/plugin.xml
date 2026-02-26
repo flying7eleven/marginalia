@@ -27,4 +27,14 @@
         <notificationGroup id="Marginalia"
                            displayType="BALLOON"/>
     </extensions>
+
+    <actions>
+        <group id="com.marginalia.actions" text="Marginalia" popup="true">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <action id="com.marginalia.actions.StartInterview"
+                    class="com.marginalia.actions.StartInterviewAction"
+                    text="Start Interview"
+                    description="Launch the AI interview to generate a product description"/>
+        </group>
+    </actions>
 </idea-plugin>

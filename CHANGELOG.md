@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - "Marginalia" entry in the New Project dialog that scaffolds a project and launches the AI interview
 - Claude Code CLI integration for AI-powered interviews using the local `claude` installation
 - Automatic detection of the Claude Code CLI from common install locations and system PATH
+- "Start Interview" action under Tools > Marginalia for running the AI interview on existing projects
 
 ### Changed
 
