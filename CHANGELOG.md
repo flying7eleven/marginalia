@@ -22,3 +22,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Automatic AI interview launch after project scaffolding (requires API key in settings)
 - Persistent settings with secure API key storage via IDE PasswordSafe
 - Settings page under Preferences > Tools > Marginalia for API key, model, and interview options
+- New Project wizard step with fields for project name, location, language, and description
