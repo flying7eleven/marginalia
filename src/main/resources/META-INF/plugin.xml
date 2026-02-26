@@ -1,0 +1,27 @@
+<idea-plugin>
+    <id>com.marginalia</id>
+    <name>Marginalia</name>
+    <vendor>Marginalia</vendor>
+
+    <description><![CDATA[
+    AI-assisted project scaffolding for JetBrains IDEs.
+    Marginalia guides you through an interactive interview to generate
+    a tailored project structure with spec files and configuration.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>Git4Idea</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <newProjectWizard.generator
+                implementation="com.marginalia.wizard.MarginaliaProjectWizard"/>
+
+        <applicationService
+                serviceImplementation="com.marginalia.settings.MarginaliaSettings"/>
+
+        <applicationConfigurable
+                parentId="tools"
+                displayName="Marginalia"
+                instance="com.marginalia.settings.MarginaliaSettingsConfigurable"/>
+    </extensions>
+</idea-plugin>
