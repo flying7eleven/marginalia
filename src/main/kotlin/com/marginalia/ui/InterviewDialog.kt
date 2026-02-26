@@ -40,7 +40,8 @@ class InterviewDialog(
     }
 
     override fun createCenterPanel(): JComponent {
-        chatPanel.preferredSize = Dimension(600, 500)
+        chatPanel.minimumSize = Dimension(500, 400)
+        chatPanel.preferredSize = Dimension(700, 550)
         return chatPanel
     }
 

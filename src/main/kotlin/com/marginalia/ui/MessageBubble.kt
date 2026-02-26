@@ -3,6 +3,7 @@ package com.marginalia.ui
 import com.intellij.ui.JBColor
 import com.intellij.util.ui.JBUI
 import java.awt.BorderLayout
+import java.awt.Dimension
 import javax.swing.JEditorPane
 import javax.swing.JLabel
 import javax.swing.JPanel
@@ -16,7 +17,7 @@ class MessageBubble(
 
     init {
         isOpaque = false
-        border = JBUI.Borders.empty(4, 8)
+        border = JBUI.Borders.empty(6, 0)
 
         val roleLabel = JLabel(if (role == Role.USER) "You" else "Assistant").apply {
             font = font.deriveFont(java.awt.Font.BOLD, font.size2D - 1f)
@@ -38,6 +39,9 @@ class MessageBubble(
         add(roleLabel, BorderLayout.NORTH)
         add(textPane, BorderLayout.CENTER)
     }
+
+    override fun getMaximumSize(): Dimension =
+        Dimension(Int.MAX_VALUE, super.getPreferredSize().height)
 
     companion object {
         private val USER_BG = JBColor(0xE3F2FD, 0x2B3C4D)
