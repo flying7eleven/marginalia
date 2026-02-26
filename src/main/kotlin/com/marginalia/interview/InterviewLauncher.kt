@@ -3,7 +3,8 @@ package com.marginalia.interview
 import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
-import com.marginalia.ai.AnthropicAiClient
+import com.marginalia.ai.ClaudeCliClient
+import com.marginalia.ai.ClaudeCliDiscovery
 import com.marginalia.scaffold.ProjectConfig
 import com.marginalia.settings.MarginaliaSettings
 import com.marginalia.ui.InterviewDialog
@@ -16,20 +17,20 @@ object InterviewLauncher {
 
         if (!settings.state.autoStartInterview) return
 
-        val apiKey = settings.apiKey
-        if (apiKey.isNullOrBlank()) {
+        val cliBinary = ClaudeCliDiscovery.discover()
+        if (cliBinary == null) {
             NotificationGroupManager.getInstance()
                 .getNotificationGroup("Marginalia")
                 .createNotification(
                     "Marginalia",
-                    "No API key configured. Set your Anthropic API key in Settings > Tools > Marginalia to enable the AI interview.",
+                    "Claude Code CLI not found. Install Claude Code from https://claude.ai/download to enable the AI interview.",
                     NotificationType.WARNING,
                 )
                 .notify(project)
             return
         }
 
-        val aiClient = AnthropicAiClient(apiKey, settings.state.modelName)
+        val aiClient = ClaudeCliClient(cliBinary)
         val engine = InterviewEngine(aiClient, config)
         val dialog = InterviewDialog(project, engine, specsDir)
         dialog.show()

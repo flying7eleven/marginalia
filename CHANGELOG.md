@@ -15,13 +15,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Automatic git repository initialization for scaffolded projects
 - Project scaffolder that creates dual-repo structure (specs + code) with templates and git init
 - IDE integration for scaffolding with automatic file system refresh
-- AI client interface for pluggable AI providers with Anthropic Claude implementation
+- AI client interface for pluggable AI providers
 - Interview engine that conducts a guided Q&A to generate a product description
 - Chat UI with message bubbles, text input, Send and Generate Now buttons
 - Interview dialog that runs the AI conversation and writes the product description on completion
-- Automatic AI interview launch after project scaffolding (requires API key in settings)
-- Persistent settings with secure API key storage via IDE PasswordSafe
-- Settings page under Preferences > Tools > Marginalia for API key, model, and interview options
+- Automatic AI interview launch after project scaffolding (requires Claude Code CLI)
+- Settings page under Preferences > Tools > Marginalia for interview options
 - New Project wizard step with fields for project name, location, language, and description
 - "Marginalia" entry in the New Project dialog that scaffolds a project and launches the AI interview
 - Claude Code CLI integration for AI-powered interviews using the local `claude` installation
@@ -30,3 +29,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - AI interview now uses the Claude Code CLI for conversation, with automatic session resumption across turns
+
+### Removed
+
+- Anthropic Java SDK dependency and direct API key management — the plugin now relies entirely on the Claude Code CLI
