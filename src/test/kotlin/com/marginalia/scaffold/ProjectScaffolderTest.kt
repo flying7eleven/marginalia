@@ -110,13 +110,13 @@ class ProjectScaffolderTest {
     }
 
     @Test
-    fun `scaffold fails when code directory already exists`(@TempDir tempDir: Path) {
+    fun `scaffold succeeds when code directory already exists`(@TempDir tempDir: Path) {
         Files.createDirectory(tempDir.resolve("myproject"))
         val scaffolder = ProjectScaffolder(fakeGitInit)
 
-        val exception = assertThrows(IllegalArgumentException::class.java) {
-            scaffolder.scaffold(config(tempDir))
-        }
-        assertTrue(exception.message!!.contains("Code directory already exists"))
+        val result = scaffolder.scaffold(config(tempDir))
+
+        assertTrue(Files.isDirectory(result.codeDir))
+        assertTrue(Files.isDirectory(result.specsDir))
     }
 }

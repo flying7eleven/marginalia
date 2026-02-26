@@ -17,12 +17,11 @@ class ProjectScaffolder(
         require(!Files.exists(specsDir)) {
             "Specs directory already exists: $specsDir"
         }
-        require(!Files.exists(codeDir)) {
-            "Code directory already exists: $codeDir"
-        }
 
         Files.createDirectory(specsDir)
-        Files.createDirectory(codeDir)
+        if (!Files.exists(codeDir)) {
+            Files.createDirectory(codeDir)
+        }
 
         val epicsDir = specsDir.resolve("epics")
         val storiesDir = specsDir.resolve("stories")
