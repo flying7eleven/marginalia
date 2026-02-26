@@ -14,3 +14,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Spec file templates for README, product description, epics index, and stories index
 - Automatic git repository initialization for scaffolded projects
 - Project scaffolder that creates dual-repo structure (specs + code) with templates and git init
+- IDE integration for scaffolding with automatic file system refresh
