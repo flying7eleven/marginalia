@@ -14,10 +14,7 @@ class ClaudeCliClientTest {
         val script = createFakeClaudeScript(tempDir, """{"session_id":"abc-123","result":"Hello!"}""")
         val client = ClaudeCliClient(script, timeoutSeconds = 10)
 
-        val response = client.chat(
-            "You are a helpful assistant",
-            listOf(ChatMessage(Role.USER, "Hi")),
-        )
+        val response = client.chat("You are a helpful assistant", "Hi")
 
         assertEquals("Hello!", response)
     }
@@ -28,9 +25,9 @@ class ClaudeCliClientTest {
         val client = ClaudeCliClient(script, timeoutSeconds = 10)
 
         // First call establishes session
-        client.chat("System prompt", listOf(ChatMessage(Role.USER, "First")))
+        client.chat("System prompt", "First")
         // Second call should use --resume
-        val response = client.chat("System prompt", listOf(ChatMessage(Role.USER, "Second")))
+        val response = client.chat(null, "Second")
 
         assertEquals("Response", response)
     }
@@ -42,7 +39,7 @@ class ClaudeCliClientTest {
 
         val exception = assertThrows(IllegalStateException::class.java) {
             kotlinx.coroutines.test.runTest {
-                client.chat("prompt", listOf(ChatMessage(Role.USER, "Hi")))
+                client.chat("prompt", "Hi")
             }
         }
         assertTrue(exception.message!!.contains("exited with code 1"))
@@ -55,23 +52,10 @@ class ClaudeCliClientTest {
 
         val exception = assertThrows(IllegalStateException::class.java) {
             kotlinx.coroutines.test.runTest {
-                client.chat("prompt", listOf(ChatMessage(Role.USER, "Hi")))
+                client.chat("prompt", "Hi")
             }
         }
         assertTrue(exception.message!!.contains("timed out"))
-    }
-
-    @Test
-    fun `throws when no user message provided`(@TempDir tempDir: Path) = runTest {
-        val script = createFakeClaudeScript(tempDir, """{"session_id":"x","result":"ok"}""")
-        val client = ClaudeCliClient(script, timeoutSeconds = 10)
-
-        val exception = assertThrows(IllegalStateException::class.java) {
-            kotlinx.coroutines.test.runTest {
-                client.chat("prompt", emptyList())
-            }
-        }
-        assertTrue(exception.message!!.contains("No user message"))
     }
 
     @Test
@@ -83,8 +67,8 @@ class ClaudeCliClientTest {
         val script = createMultiResponseScript(tempDir, responses)
         val client = ClaudeCliClient(script, timeoutSeconds = 10)
 
-        client.chat("prompt", listOf(ChatMessage(Role.USER, "Hi")))
-        val second = client.chat("prompt", listOf(ChatMessage(Role.USER, "Follow up")))
+        client.chat("prompt", "Hi")
+        val second = client.chat(null, "Follow up")
 
         assertEquals("Second response", second)
     }

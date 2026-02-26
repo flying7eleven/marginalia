@@ -13,12 +13,9 @@ class ClaudeCliClient(
 
     private var sessionId: String? = null
 
-    override suspend fun chat(systemPrompt: String, messages: List<ChatMessage>): String =
+    override suspend fun chat(systemPrompt: String?, message: String): String =
         withContext(Dispatchers.IO) {
-            val userMessage = messages.lastOrNull { it.role == Role.USER }?.content
-                ?: error("No user message found in messages list")
-
-            val command = buildCommand(systemPrompt, userMessage)
+            val command = buildCommand(systemPrompt, message)
             val result = execute(command)
 
             val json = JsonParser.parseString(result).asJsonObject
@@ -30,13 +27,13 @@ class ClaudeCliClient(
                 ?: error("Missing 'result' field in CLI response")
         }
 
-    private fun buildCommand(systemPrompt: String, message: String): List<String> {
+    private fun buildCommand(systemPrompt: String?, message: String): List<String> {
         val cmd = mutableListOf(cliBinary.toString(), "-p")
 
         val currentSessionId = sessionId
         if (currentSessionId != null) {
             cmd += listOf("--resume", currentSessionId)
-        } else if (systemPrompt.isNotBlank()) {
+        } else if (!systemPrompt.isNullOrBlank()) {
             cmd += listOf("--system-prompt", systemPrompt)
         }
 

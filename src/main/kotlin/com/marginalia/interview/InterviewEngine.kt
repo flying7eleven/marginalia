@@ -22,7 +22,11 @@ class InterviewEngine(
     private val _events = MutableSharedFlow<InterviewEvent>(replay = 0, extraBufferCapacity = 64)
     val events: SharedFlow<InterviewEvent> = _events.asSharedFlow()
 
+    /** Local conversation history kept for UI display only. */
     private val history = mutableListOf<ChatMessage>()
+
+    /** Whether the first CLI call (with system prompt) has been made. */
+    private var started = false
 
     private val systemPrompt: String = """
         |You are a product analyst helping a developer define their new software project.
@@ -59,7 +63,7 @@ class InterviewEngine(
 
     fun start() {
         scope.launch {
-            chat()
+            sendToAi("Start the interview by greeting the user and asking your first question.")
         }
     }
 
@@ -67,7 +71,7 @@ class InterviewEngine(
         history.add(ChatMessage(Role.USER, userInput))
         _events.tryEmit(InterviewEvent.UserMessage(userInput))
         scope.launch {
-            chat()
+            sendToAi(userInput)
         }
     }
 
@@ -76,14 +80,17 @@ class InterviewEngine(
         history.add(ChatMessage(Role.USER, prompt))
         _events.tryEmit(InterviewEvent.UserMessage(prompt))
         scope.launch {
-            chat()
+            sendToAi(prompt)
         }
     }
 
-    private suspend fun chat() {
+    private suspend fun sendToAi(message: String) {
         _events.tryEmit(InterviewEvent.Thinking)
         try {
-            val response = aiClient.chat(systemPrompt, history)
+            val prompt = if (!started) systemPrompt else null
+            val response = aiClient.chat(prompt, message)
+            started = true
+
             history.add(ChatMessage(Role.ASSISTANT, response))
 
             val description = extractProductDescription(response)
