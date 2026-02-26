@@ -15,3 +15,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Automatic git repository initialization for scaffolded projects
 - Project scaffolder that creates dual-repo structure (specs + code) with templates and git init
 - IDE integration for scaffolding with automatic file system refresh
+- AI client interface for pluggable AI providers with Anthropic Claude implementation
